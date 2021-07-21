@@ -1,0 +1,11 @@
+{
+  "name": "To Do List",
+  "version": "1.0.1",
+  "description": "A simple pop out todo list",
+  "icons": { "16": "todo.png"},
+	"browser_action": {
+		"default_title": "Epic Mode",
+		"default_popup": "popout.html"
+	},
+  "manifest_version": 2
+}

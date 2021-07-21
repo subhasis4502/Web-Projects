@@ -1,0 +1,12 @@
+.App {
+  background-color: wheat;
+  text-align: center;
+  margin: 118px;
+  border-radius: 10px;
+}
+
+.App h1 {
+  padding: 21px;
+  color: white;
+}
+

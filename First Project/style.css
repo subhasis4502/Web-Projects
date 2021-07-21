@@ -1,0 +1,76 @@
+*{
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body{
+    margin: 0px;
+}
+
+header{
+    padding: 50px;
+    text-align: center;
+    background: rgb(17 143 158); /* Greenish background color */
+    color: white; /* White text color */
+}
+
+header h1{
+    font-size: 40px;
+}
+
+nav{
+    background-color: #333; /* Blakish grey color */
+    overflow: hidden; /* To show the nav bar */
+}
+
+nav a{
+    display: block; /* Make every element a b;\lock */
+    color: white;
+    text-decoration: none; /* Removing the underline */
+    padding: 14px 20px;
+    float: left; /* Make it left */
+}
+
+section{
+    text-align: center;
+    padding-top: 40px;
+    height: 100vh;
+}
+
+section:nth-child(even){ /* Seleting the even blocks */
+    background-color:#ececec;
+}
+
+iframe, img{
+    padding: 0px 5px 5px;
+}
+
+h2{
+    padding-bottom: 40px;
+}
+
+footer{
+    overflow: hidden;
+    margin-top: 10px;
+    background-color: #333;
+}
+
+footer a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    float: left;
+}
+
+.copyright{
+    float: left;
+}
+
+section h4, h5{
+    margin: 0px 30px 30px;
+}
+
+.dp {
+    border-radius: 50%;
+}

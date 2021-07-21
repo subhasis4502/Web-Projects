@@ -1,3 +1,4 @@
+//A popup appears when all commands are executed
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
   if (msg.command == "run-complete") {
     document.querySelector("textarea").value = JSON.stringify(msg.data);
@@ -6,10 +7,12 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   }
 });
 
+//Creating an object based upon our given input
 function createCommandObject() {
   var commandsArr = [];
 
   var commands = document.querySelectorAll(".commands-list .command-item");
+  //Pushing the input commands to commandsArr
   for (var i = 0; i < commands.length; i++) {
     var itemObj = {};
     itemObj.type = commands[i].querySelector("select").value;
@@ -18,10 +21,11 @@ function createCommandObject() {
     commandsArr.push(itemObj);
   }
 
+  //Executing the command Object
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     var activeTab = tabs[0];
     var obj = commandsArr;
-    console.log(activeTab, obj);
+    //console.log(activeTab, obj);
     chrome.tabs.sendMessage(activeTab.id, {
       command: "runCommands",
       data: obj,
@@ -29,10 +33,12 @@ function createCommandObject() {
   });
 }
 
+//Whenever we push the run button
 document.querySelector(".run-command").addEventListener("click", function () {
   createCommandObject();
 });
 
+//Whenever we press 'Add command' it will generate the respective input fields
 document.querySelector(".new-command").addEventListener("click", function () {
   var newItem = `<div class="command-item">
     <select>

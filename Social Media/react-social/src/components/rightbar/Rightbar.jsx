@@ -24,7 +24,7 @@ export default function Ridebar({profile}) {
         );
     };
 
-    const ProfileGightbar = () =>{
+    const ProfileRightbar = () =>{
         return (
             <>
                 <h4 className="rightbarTitle">User information</h4>
@@ -75,7 +75,7 @@ export default function Ridebar({profile}) {
     return (
         <div className="rightbar">
             <div className="rightbarWrapper">
-                <ProfileGightbar/>
+                {profile ? <ProfileRightbar/> : <HomeRightbar/>}
             </div>
         </div>
     )

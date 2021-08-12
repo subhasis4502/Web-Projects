@@ -13,7 +13,7 @@ export default function Register() {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    if (passwordAgain.current.value != password.current.value) {
+    if (passwordAgain.current.value !== password.current.value) {
       passwordAgain.current.setCustomValidity("Password doesn't matched!");
     } else {
       const user = {

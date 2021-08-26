@@ -45,6 +45,7 @@ export default function Share() {
       <div className="shareWrapper">
         <div className="shareTop">
           <Link to={`/profile/${user.username}`}>
+            {console.log(user)}
             <img
               className="shareProfileImg"
               src={

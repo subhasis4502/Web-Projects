@@ -1,5 +1,11 @@
 import "./topbar.css";
-import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import {
+  Search,
+  Person,
+  Chat,
+  Notifications,
+  PowerSettingsNew,
+} from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -20,6 +26,11 @@ export default function Topbar() {
     } catch (err) {}
   };
 
+  const handleLogout = async (e) => {
+    localStorage.clear();
+    window.location.reload();
+  }
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -28,8 +39,8 @@ export default function Topbar() {
         </Link>
       </div>
       <div className="topbarCenter">
-        <div className="searchbar" >
-          <Search className="searchIcon" onClick={handleSearch}/>
+        <div className="searchbar">
+          <Search className="searchIcon" onClick={handleSearch} />
           <input
             placeholder="Search for friends and posts"
             className="searchInput"
@@ -65,6 +76,7 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
+        <PowerSettingsNew className="logout" onClick={handleLogout}/>
         <Link to={`/profile/${user.username}`}>
           <img
             src={

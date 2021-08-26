@@ -74,6 +74,10 @@
   position: relative;
 }
 
+.logout{
+  cursor: pointer;
+}
+
 .topbarIconBadge {
   width: 15px;
   height: 15px;

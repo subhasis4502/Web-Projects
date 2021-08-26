@@ -66,8 +66,8 @@ router.get("/friends/:userId", async (req, res) => {
     );
     let friendList = [];
     friends.map((friend) => {
-      const { _id, username, profilePicture } = friend;
-      friendList.push({ _id, username, profilePicture });
+      const { _id, name, username, profilePicture } = friend;
+      friendList.push({ _id, name, username, profilePicture });
     });
     res.status(200).json(friendList);
   } catch (err) {
@@ -89,7 +89,7 @@ router.put("/:id/follow", async (req, res) => {
         res.status(403).json("You already follow this user");
       }
     } catch (err) {
-      req.status(500).json(err);
+      res.status(500).json(err);
     }
   } else {
     res.status(403).json("You can't follow yourself");
@@ -110,7 +110,7 @@ router.put("/:id/unfollow", async (req, res) => {
         res.status(403).json("You are not following this user");
       }
     } catch (err) {
-      req.status(500).json(err);
+      res.status(500).json(err);
     }
   } else {
     res.status(403).json("You can't unfollow yourself");

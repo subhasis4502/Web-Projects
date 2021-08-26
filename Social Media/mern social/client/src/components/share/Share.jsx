@@ -9,6 +9,7 @@ import {
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Share() {
   const { user } = useContext(AuthContext);
@@ -22,7 +23,6 @@ export default function Share() {
       userId: user._id,
       desc: desc.current.value,
     };
-
     if (file) {
       const data = new FormData();
       const fileName = Date.now() + file.name;
@@ -34,7 +34,6 @@ export default function Share() {
         await axios.post("/upload", data);
       } catch (err) {}
     }
-
     try {
       await axios.post("/posts", newPost);
       window.location.reload();
@@ -45,15 +44,17 @@ export default function Share() {
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
-          <img
-            className="shareProfileImg"
-            src={
-              user.profilePicture
-                ? PF + user.profilePicture
-                : PF + "person/noAvatar.png"
-            }
-            alt=""
-          />
+          <Link to={`/profile/${user.username}`}>
+            <img
+              className="shareProfileImg"
+              src={
+                user.profilePicture
+                  ? PF + user.profilePicture
+                  : PF + "person/noAvatar.png"
+              }
+              alt=""
+            />
+          </Link>
           <input
             placeholder={"What's in your mind " + user.username + "?"}
             className="shareInput"

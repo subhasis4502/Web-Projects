@@ -49,7 +49,7 @@ export default function Post({ post }) {
                 alt=""
               />
             </Link>
-            <span className="postUsername">{user.username}</span>
+            <span className="postUsername">{user.name ? user.name : user.username}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
@@ -77,7 +77,7 @@ export default function Post({ post }) {
             <span className="postLikeCounter">{like} People like this</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommenText">{post.comment} Comments</span>
+            <span className="postCommentText">{post.comment} Comments</span>
           </div>
         </div>
       </div>

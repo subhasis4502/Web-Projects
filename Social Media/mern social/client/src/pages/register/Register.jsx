@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 import "./register.css";
 
 export default function Register() {
@@ -12,7 +12,6 @@ export default function Register() {
 
   const handleClick = async (e) => {
     e.preventDefault();
-
     if (passwordAgain.current.value !== password.current.value) {
       passwordAgain.current.setCustomValidity("Password doesn't matched!");
     } else {
@@ -52,30 +51,28 @@ export default function Register() {
               placeholder="Enter your Email-Id"
               required
               ref={email}
-              type="email"
               className="loginInput"
+              type="email"
             />
             <input
               placeholder="Enter a new Password"
               required
               ref={password}
-              type="password"
               className="loginInput"
+              type="password"
               minLength="6"
             />
             <input
               placeholder="Confirm your Password"
               required
               ref={passwordAgain}
-              type="password"
               className="loginInput"
+              type="password"
             />
             <button className="loginButton" type="submit">
               Sign Up
             </button>
-            <button className="loginRegisterButton" type="submit">
-              Log into Account
-            </button>
+            <button className="loginRegisterButton">Log into Account</button>
           </form>
         </div>
       </div>

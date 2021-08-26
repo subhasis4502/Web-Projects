@@ -43,6 +43,8 @@
 
 .profileInfoDesc{
     font-weight: 300;
+    max-width: 40%;
+    text-align: center;
 }
 
 .profileRightBottom{

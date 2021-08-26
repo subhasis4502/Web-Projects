@@ -6,6 +6,8 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
+import { Edit } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -20,6 +22,7 @@ export default function Profile() {
     };
     fetchUser();
   }, [username]);
+
   return (
     <>
       <Topbar />
@@ -29,26 +32,31 @@ export default function Profile() {
           <div className="profileRightTop">
             <div className="profileCover">
               <img
+                className="profileCoverImg"
                 src={
                   user.coverPicture
                     ? PF + user.coverPicture
                     : PF + "person/noCover.png"
                 }
                 alt=""
-                className="profileCoverImg"
               />
               <img
+                className="profileUserImg"
                 src={
                   user.profilePicture
                     ? PF + user.profilePicture
                     : PF + "person/noAvatar.png"
                 }
                 alt=""
-                className="profileUserImg"
               />
+              <Link to={`/${user.username}/edit`}>
+              <div className="editProfilePicture">
+                <Edit/>
+              </div>
+              </Link>
             </div>
             <div className="profileInfo">
-              <h4 className="profileInfoName">{user.username}</h4>
+              <h4 className="profileInfoName">{user.name ? user.name : user.username}</h4>
               <span className="profileInfoDesc">{user.desc}</span>
             </div>
           </div>

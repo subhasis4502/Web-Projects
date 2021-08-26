@@ -1,20 +1,28 @@
 import "./rightbar.css";
-import { Users } from "../../dummyData";
-import Online from "../online/Online";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
 
-export default function Ridebar({ user }) {
+import ChatOnline from "../../components/chatOnline/ChatOnline";
+import { io } from "socket.io-client";
+
+export default function Rightbar({ user }) {
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const [followed, setFollowed] = useState(currentUser.followings.includes(user?.id));
+  const [followed, setFollowed] = useState(
+    currentUser.followings.includes(user?._id)
+  );
+  const [currentChat, setCurrentChat] = useState(null);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const socket = useRef();
 
   useEffect(() => {
-    setFollowed(currentUser.followings.includes(user?.id));
-  }, [currentUser, user]);
+    setFollowed(currentUser.followings.includes(user?._id));
+    console.log(followed)
+  }, [currentUser, user?.id])
 
   useEffect(() => {
     const getFriends = async () => {
@@ -31,37 +39,61 @@ export default function Ridebar({ user }) {
   const handleClick = async () => {
     try {
       if (followed) {
-        await axios.put("/users/" + user._id + "/unfollow", {
+        await axios.put(`/users/${user._id}/unfollow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await axios.put("/users/" + user._id + "/follow", {
+        await axios.post("/conversations/", {
+          senderId: currentUser._id,
+          receiverId: user._id,
+        });
+        await axios.put(`/users/${user._id}/follow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });
       }
-    } catch (err) {
-      console.log(err);
-    }
-    setFollowed(!followed);
+      setFollowed(!followed);
+    } catch (err) {}
   };
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit("addUser", currentUser._id);
+    socket.current.on("getUsers", (users) => {
+      setOnlineUsers(
+        currentUser.followings.filter((f) => users.some((u) => u.userId === f))
+      );
+    });
+  }, [currentUser]);
 
   const HomeRightbar = () => {
     return (
       <>
         <div className="birthdayContainer">
-          <img className="birthdayImg" src="/assets/gift.png" alt="" />
+          <img className="birthdayImg" src="assets/gift.png" alt="" />
           <span className="birthdayText">
             <b>Ranajoy Mondal</b> and <b>3 others</b> have their Birthday today
           </span>
         </div>
-        <img src="/assets/ad.png" alt="" className="rightbarAd" />
+        <img className="rightbarAd" src="assets/ad.png" alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
+          <ChatOnline
+            onlineUsers={onlineUsers}
+            currentId={currentUser._id}
+            setCurrentChat={setCurrentChat}
+          />
         </ul>
       </>
     );
@@ -90,7 +122,11 @@ export default function Ridebar({ user }) {
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Relationship: </span>
             <span className="rightbarInfoValue">
-              {user.relationship === 1 ? "Single" : "Married"}
+              {user.relationship === 1
+                ? "Single"
+                : user.relationship === 2
+                ? "Married"
+                : "In relationship"}
             </span>
           </div>
         </div>
@@ -111,7 +147,9 @@ export default function Ridebar({ user }) {
                   alt=""
                   className="rightbarFollowingImg"
                 />
-                <span className="rightbarFollowingName">{friend.username}</span>
+                <span className="rightbarFollowingName">
+                  {friend.name ? friend.name : friend.username}
+                </span>
               </div>
             </Link>
           ))}

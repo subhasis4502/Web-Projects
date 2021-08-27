@@ -14,14 +14,12 @@ export default function Rightbar({ user }) {
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
   );
-  const [currentChat, setCurrentChat] = useState(null);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const socket = useRef();
 
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
-  }, [currentUser, user?._id])
+  }, [currentUser, user?._id]);
 
   useEffect(() => {
     const getFriends = async () => {
@@ -58,13 +56,6 @@ export default function Rightbar({ user }) {
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
-    socket.current.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
   }, []);
 
   useEffect(() => {
@@ -88,11 +79,7 @@ export default function Rightbar({ user }) {
         <img className="rightbarAd" src="assets/ad.png" alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          <ChatOnline
-            onlineUsers={onlineUsers}
-            currentId={currentUser._id}
-            setCurrentChat={setCurrentChat}
-          />
+          <ChatOnline onlineUsers={onlineUsers} currentId={currentUser._id} />
         </ul>
       </>
     );

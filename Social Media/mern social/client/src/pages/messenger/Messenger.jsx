@@ -7,6 +7,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { io } from "socket.io-client";
+import { Send } from "@material-ui/icons";
 
 export default function Messenger() {
   const [conversations, setConversations] = useState([]);
@@ -131,9 +132,10 @@ export default function Messenger() {
                     placeholder="Write your message here!"
                     onChange={(e) => setNewMessage(e.target.value)}
                     value={newMessage}
+                    style={{resize: "none"}}
                   ></textarea>
                   <button className="chatSubmitButton" onClick={handleSubmit}>
-                    Send
+                    <Send />
                   </button>
                 </div>
               </>

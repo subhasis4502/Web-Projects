@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHistory } from "react-router";
-import axios from "axios";
 
 export default function Topbar() {
   const { user } = useContext(AuthContext);

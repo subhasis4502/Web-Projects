@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { Add, Remove } from "@material-ui/icons";
+import { Add, Edit, Remove } from "@material-ui/icons";
 
 import ChatOnline from "../../components/chatOnline/ChatOnline";
 import { io } from "socket.io-client";
@@ -94,6 +94,13 @@ export default function Rightbar({ user }) {
             {followed ? "Unfollow" : "Follow"}
             {followed ? <Remove /> : <Add />}
           </button>
+        )}
+        {user.username === currentUser.username && (
+          <Link to={`/${user.username}/edit`} style={{textDecoration:"none"}}>
+            <button className="updateProfile">
+              <Edit /> Edit Profile
+            </button>
+          </Link>
         )}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">

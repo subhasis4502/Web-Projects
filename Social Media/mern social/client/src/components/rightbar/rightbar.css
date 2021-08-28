@@ -96,7 +96,7 @@ span.rightbarFollowingName {
   text-align: center;
 }
 
-.rightbarFollowButton {
+.rightbarFollowButton, .updateProfile {
   margin-top: 30px;
   margin-bottom: 10px;
   border: none;
@@ -109,6 +109,10 @@ span.rightbarFollowingName {
   align-items: center;
   font-size: 16px;
   font-weight: 500;
+}
+
+.updateProfile{
+  width: 120px;
 }
 
 .rightbarFollowButton:focus {

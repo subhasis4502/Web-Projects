@@ -3,16 +3,18 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { Edit } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().username;
+  const { user: currentUser } = useContext(AuthContext);
   //console.log(params.username);
 
   useEffect(() => {
@@ -49,14 +51,11 @@ export default function Profile() {
                 }
                 alt=""
               />
-              <Link to={`/${user.username}/edit`}>
-              <div className="editProfilePicture">
-                <Edit/>
-              </div>
-              </Link>
             </div>
             <div className="profileInfo">
-              <h4 className="profileInfoName">{user.name ? user.name : user.username}</h4>
+              <h4 className="profileInfoName">
+                {user.name ? user.name : user.username}
+              </h4>
               <span className="profileInfoDesc">{user.desc}</span>
             </div>
           </div>

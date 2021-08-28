@@ -24,7 +24,6 @@
 
 .chatBoxWrapper {
   display: flex;
-  height: 100%;
   padding: 30px;
   flex-direction: column;
   justify-content: space-between;
@@ -58,15 +57,17 @@
   cursor: pointer;
   background-color: teal;
   color: white;
+  margin: 20px;
 }
 
 .chatOnline {
   flex: 2;
 }
 
-.chatMenuWrapper
+.chatMenuWrapper,
+.chatBoxWrapper,
 .chatOnlineWrapper {
-  padding: 10px;
+  padding: 20px;
   height: 100%;
 }
 
